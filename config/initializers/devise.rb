@@ -280,8 +280,6 @@ Devise.setup do |config|
   config.warden do |manager|
     manager.scope_defaults :user, store: false
     manager.failure_app = Users::FailureApp
-    # manager.intercept_401 = false
-    # manager.default_strategies(scope: :user).unshift :some_external_strategy
   end
 
   config.jwt do |jwt|
