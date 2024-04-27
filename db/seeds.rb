@@ -7,3 +7,18 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+genres = ['Action', 'Adventure', 'Role-playing (RPG)', 'Strategy', 'Simulation', 'Sports', 'Puzzle', 'Horror', 'Survival']
+
+genres.each {|genr, index| GameType.create!(name: genr, description:index, status: 1 )}
+
+100.times do
+  game = Game.create(
+    name: Faker::Game.title,
+    description: Faker::Lorem.paragraph,
+    game_type_id: GameType.all.pluck(:id).sample,
+    status: 1
+  )
+end
+
+puts "Games created"
