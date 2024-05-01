@@ -15,11 +15,11 @@ class Users::SessionsController < Devise::SessionsController
     super
   end
 
-  def repond_to_on_destroy
+  def respond_to_on_destroy
     if @authenticated && current_user.nil?
-      render status: :ok
+      render json: {message: "Успешный выход из системы"}, status: :ok
     else
-      render status: :unprocessable_entity
+      render json: {message: "Ошибка выхода из системы"}, status: :unprocessable_entity
     end
   end
 

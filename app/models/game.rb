@@ -19,4 +19,6 @@ class Game < ApplicationRecord
       transitions from: %i[pending_approval approved], to: :rejected
     end
   end
+
+  validates :name, uniqueness: true
 end
