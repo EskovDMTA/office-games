@@ -19,8 +19,8 @@ class Api::V1::GameTypesController < Api::V1::ApplicationController
   end
 
   def create
-    @game_type = GameType.create!(game_type_params)
-    render json: { message: "#{@game_type.name} отправлен на модерацию" }, status: :created
+    game_type = GameType.create!(game_type_params)
+    render json: { message: "#{game_type.name} отправлен на модерацию" }, status: :created
   rescue => e
     render json: { error: "Произошла ошибка при сохранении записи:#{e.message}" }, status: :unprocessable_entity
   end

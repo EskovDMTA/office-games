@@ -15,10 +15,15 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "homes#home"
 
-  namespace "api", defaults: {format: :json} do
+  namespace "api", defaults: { format: :json } do
     namespace "v1" do
       resources :game_types
       resources :games
+
+      scope module: 'organizations' do
+        resources :organizations
+      end
     end
   end
 end
+

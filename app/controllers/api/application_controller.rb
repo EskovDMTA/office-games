@@ -4,8 +4,10 @@ class Api::ApplicationController < ApplicationController
 
   private
 
-  def authorization_error
-    render json: {error: "Ошибка доступа"}, status: :forbidden
+  def authorization_error(exception)
+    puts "123"
+    error_message = exception.message || "Ошибка доступа"
+    render json: {error: error_message}, status: :forbidden
   end
 
   def not_found_error(exception)
