@@ -21,8 +21,12 @@ Rails.application.routes.draw do
       resources :games
 
       scope module: 'organizations' do
-        resources :organizations
+        resources :organizations do
+          resources :teams , only: %i[index]
+        end
       end
+
+      resources :teams, only: %i[show create update destroy]
     end
   end
 end

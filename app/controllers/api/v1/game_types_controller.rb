@@ -26,8 +26,6 @@ class Api::V1::GameTypesController < Api::V1::ApplicationController
   end
 
   def destroy
-    authorize_game_type
-    @game_type = GameType.find(params[:id])
     @game_type.destroy
     render json: { message: "#{@game_type.name} удален" }, status: :ok
   end

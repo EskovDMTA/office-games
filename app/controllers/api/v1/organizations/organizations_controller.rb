@@ -11,7 +11,7 @@ module Api
         end
 
         def show
-
+          render format: :json
         end
 
         def create
@@ -28,11 +28,11 @@ module Api
           else
             render json: { error: @organization.errors.full_messages }, status: :unprocessable_entity
           end
-
         end
 
         def destroy
-
+          @organization.destroy
+          render json: { message: "Организация успешно удалена" }, status: :ok
         end
 
         private
