@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_02_175100) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_07_211939) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -73,6 +73,60 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_02_175100) do
     t.index ["organization_id"], name: "index_teams_on_organization_id"
   end
 
+  create_table "tournaments_match_results", force: :cascade do |t|
+    t.bigint "match_id", null: false
+    t.string "participant1_type"
+    t.bigint "participant1_id"
+    t.string "participant2_type"
+    t.bigint "participant2_id"
+    t.string "winner_type"
+    t.bigint "winner_id"
+    t.integer "participant1_score"
+    t.integer "participant2_score"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["match_id"], name: "index_tournaments_match_results_on_match_id"
+    t.index ["participant1_type", "participant1_id"], name: "index_tournaments_match_results_on_participant1"
+    t.index ["participant2_type", "participant2_id"], name: "index_tournaments_match_results_on_participant2"
+    t.index ["winner_type", "winner_id"], name: "index_tournaments_match_results_on_winner"
+  end
+
+  create_table "tournaments_matches", force: :cascade do |t|
+    t.bigint "tournament_id", null: false
+    t.string "participant1_type"
+    t.bigint "participant1_id"
+    t.string "participant2_type"
+    t.bigint "participant2_id"
+    t.datetime "match_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["participant1_type", "participant1_id"], name: "index_tournaments_matches_on_participant1"
+    t.index ["participant2_type", "participant2_id"], name: "index_tournaments_matches_on_participant2"
+    t.index ["tournament_id"], name: "index_tournaments_matches_on_tournament_id"
+  end
+
+  create_table "tournaments_tournament_results", force: :cascade do |t|
+    t.bigint "tournament_id", null: false
+    t.string "participant_type", null: false
+    t.bigint "participant_id", null: false
+    t.integer "placement"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["participant_type", "participant_id"], name: "index_tournaments_tournament_results_on_participant"
+    t.index ["tournament_id"], name: "index_tournaments_tournament_results_on_tournament_id"
+  end
+
+  create_table "tournaments_tournaments", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.bigint "game_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_tournaments_tournaments_on_game_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -99,5 +153,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_02_175100) do
   add_foreign_key "team_users", "users"
   add_foreign_key "teams", "organizations"
   add_foreign_key "teams", "users", column: "captain_id"
+  add_foreign_key "tournaments_match_results", "tournaments_matches", column: "match_id"
+  add_foreign_key "tournaments_matches", "tournaments_tournaments", column: "tournament_id"
+  add_foreign_key "tournaments_tournament_results", "tournaments_tournaments", column: "tournament_id"
+  add_foreign_key "tournaments_tournaments", "games"
   add_foreign_key "users", "organizations"
 end
