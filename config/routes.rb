@@ -22,7 +22,13 @@ Rails.application.routes.draw do
 
       scope module: 'organizations' do
         resources :organizations do
-          resources :teams , only: %i[index]
+          resources :teams, only: %i[index]
+        end
+      end
+
+      scope module: 'tournaments' do
+        resources :tournaments do
+          resources :tournaments_bids, only: %i[index create]
         end
       end
 

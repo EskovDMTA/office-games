@@ -5,6 +5,7 @@ require_relative 'seeds/organizations'
 require_relative 'seeds/add_employees_to_organization'
 require_relative 'seeds/teams'
 require_relative 'seeds/add_employees_to_teams'
+require_relative 'seeds/tournaments'
 
 create_genres
 
@@ -19,3 +20,5 @@ add_employees_to_organizations
 create_teams
 
 add_employees_to_teams
+
+create_tournaments

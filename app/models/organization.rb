@@ -3,4 +3,5 @@ class Organization < ApplicationRecord
   has_many :users
   has_many :team_users
   has_many :teams
+  has_many :tournaments, class_name: 'Tournaments::Tournament'
 end

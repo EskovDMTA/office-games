@@ -5,6 +5,7 @@ class Game < ApplicationRecord
 
   belongs_to :game_type, counter_cache: true
   has_many :comments, as: :commentable
+  has_many :tournaments, class_name: 'Tournaments::Tournament', dependent: :destroy
 
   aasm column: 'status', enum: true do
     state :pending_approval, initial: true

@@ -4,9 +4,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :rememberable, :recoverable :trackable and :omniauthable
   devise :database_authenticatable, :registerable, :jwt_authenticatable, jwt_revocation_strategy: self
 
-  has_many :owned_organizations, class_name: "Organization", foreign_key: "owner_id"
-  belongs_to :organization, optional: true
-
+  has_one :owner_organization, class_name: "Organization", foreign_key: :owner_id
   has_many :team_users
   has_many :teams, through: :team_users
 

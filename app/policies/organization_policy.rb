@@ -1,8 +1,8 @@
 class OrganizationPolicy < ApplicationPolicy
   def create?
-    if @user.owned_organizations.present?
+    if @user.owner_organization.present?
       raise Pundit::NotAuthorizedError, "Вы уже являетесь владельцем организации"
-    elsif @user.organization.present?
+    elsif @user.organization_id.present?
       raise Pundit::NotAuthorizedError, "Вы состоите в организации"
     else
       true

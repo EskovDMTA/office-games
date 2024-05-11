@@ -16,8 +16,11 @@ module Api
 
         def create
           authorize Organization, policy_class: OrganizationPolicy
-          organization = current_user.owned_organizations.create!(organization_params)
-          render json: { message: "Ваша организация \"#{organization.name}\" создана" }, status: :created
+          organization = current_user.build_owner_organization(organization_params)
+          if organization.save
+            current_user.update(organization_id: organization.id)
+            render json: { message: "Ваша организация \"#{organization.name}\" создана" }, status: :created
+          end
         rescue => e
           render json: { error: "Произошла ошибка при сохранении записи:#{e.message}" }, status: :unprocessable_entity
         end

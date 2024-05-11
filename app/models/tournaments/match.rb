@@ -7,7 +7,7 @@ class Tournaments::Match < ApplicationRecord
   validate :match_date_within_tournament_duration
 
   def match_date_within_tournament_duration
-    unless tournaments_tournament.start_date <= match_date && match_date <= tournaments_tournament.end_date
+    unless tournament.start_date <= match_date && match_date <= tournament.end_date
       errors.add(:match_date, "дата матча не может выходить за временной промежуток проведения турнира")
     end
   end

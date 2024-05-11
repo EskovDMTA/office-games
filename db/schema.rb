@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_07_211939) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_11_143326) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -105,6 +105,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_07_211939) do
     t.index ["tournament_id"], name: "index_tournaments_matches_on_tournament_id"
   end
 
+  create_table "tournaments_tournament_bids", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.bigint "tournament_id", null: false
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_tournaments_tournament_bids_on_team_id"
+    t.index ["tournament_id"], name: "index_tournaments_tournament_bids_on_tournament_id"
+  end
+
   create_table "tournaments_tournament_results", force: :cascade do |t|
     t.bigint "tournament_id", null: false
     t.string "participant_type", null: false
@@ -124,7 +134,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_07_211939) do
     t.bigint "game_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "organization_id", null: false
     t.index ["game_id"], name: "index_tournaments_tournaments_on_game_id"
+    t.index ["organization_id"], name: "index_tournaments_tournaments_on_organization_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -155,7 +167,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_07_211939) do
   add_foreign_key "teams", "users", column: "captain_id"
   add_foreign_key "tournaments_match_results", "tournaments_matches", column: "match_id"
   add_foreign_key "tournaments_matches", "tournaments_tournaments", column: "tournament_id"
+  add_foreign_key "tournaments_tournament_bids", "teams"
+  add_foreign_key "tournaments_tournament_bids", "tournaments_tournaments", column: "tournament_id"
   add_foreign_key "tournaments_tournament_results", "tournaments_tournaments", column: "tournament_id"
   add_foreign_key "tournaments_tournaments", "games"
+  add_foreign_key "tournaments_tournaments", "organizations"
   add_foreign_key "users", "organizations"
 end
