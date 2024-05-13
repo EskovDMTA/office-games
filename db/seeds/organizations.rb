@@ -9,7 +9,8 @@ def create_organizations
         telegram: Faker::Internet.username,
         owner_id: user.id
       )
-      user.update!(organization: organization)
+      puts "ERROR"
+      user.update!(organization_id: organization.id)
 
     end
     puts "Organizations created"

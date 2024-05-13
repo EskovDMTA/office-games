@@ -28,7 +28,12 @@ Rails.application.routes.draw do
 
       scope module: 'tournaments' do
         resources :tournaments do
-          resources :tournaments_bids, only: %i[index create]
+          resources :tournament_bids, only: %i[index create] do
+            member do
+              post :accept
+              post :reject
+            end
+          end
         end
       end
 
