@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/EskovDMTA/bracket_tree.git
+  revision: 4997ac17a444874c095344ac02d67c4a9687cc7a
+  specs:
+    bracket_tree (0.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -236,6 +242,7 @@ PLATFORMS
 DEPENDENCIES
   aasm
   bootsnap
+  bracket_tree!
   debug
   devise
   devise-jwt

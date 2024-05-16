@@ -8,20 +8,20 @@ require_relative 'seeds/add_employees_to_teams'
 require_relative 'seeds/tournaments'
 require_relative 'seeds/add_tournament_bids'
 
-# create_genres
-#
-# create_games
-#
-# create_users
-#
-# create_organizations
-#
-# add_employees_to_organizations
-#
-# create_teams
-#
-# add_employees_to_teams
-#
-# create_tournaments
+create_genres
+
+create_games
+
+create_users
+
+create_organizations
+
+add_employees_to_organizations
+
+create_teams
+
+add_employees_to_teams
+
+create_tournaments
 
 add_tournament_bids

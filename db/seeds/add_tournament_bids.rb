@@ -11,7 +11,7 @@ def add_tournament_bids
         tournaments_bids << {tournament:}
       end
       team.tournament_bids.create!(tournaments_bids)
-      puts "bids created"
     end
   end
+  Tournaments::TournamentBid.all.update(status: 'approved')
 end

@@ -9,7 +9,6 @@ def create_organizations
         telegram: Faker::Internet.username,
         owner_id: user.id
       )
-      puts "ERROR"
       user.update!(organization_id: organization.id)
 
     end
