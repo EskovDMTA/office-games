@@ -1,4 +1,5 @@
 def create_tournaments
+  bracket_types = %w[DoubleElimination SingleElimination]
   organizations = Organization.all
   organizations.each do |organization|
 
@@ -8,7 +9,10 @@ def create_tournaments
       start_date = Faker::Date.forward(days: 10)
       end_date = Faker::Date.forward(days: 20)
       game = Game.all.sample
-      organization.tournaments.create(name:, start_date:, end_date:, game_id: game.id, description:)
+      bracket_type = bracket_types.sample
+      puts bracket_type
+      organization.tournaments.create(name:, start_date:, end_date:, game_id: game.id, description:, bracket_type:)
     end
+    puts "Tournaments created"
   end
 end

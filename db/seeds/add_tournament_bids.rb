@@ -14,4 +14,6 @@ def add_tournament_bids
     end
   end
   Tournaments::TournamentBid.all.update(status: 'approved')
+
+  puts "Bids created"
 end

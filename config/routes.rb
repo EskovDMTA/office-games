@@ -34,11 +34,12 @@ Rails.application.routes.draw do
               post :reject
             end
           end
+          post :generate_brackets, to: "brackets#generate", on: :member
         end
       end
-
-      resources :teams, only: %i[show create update destroy]
     end
+
+    resources :teams, only: %i[show create update destroy]
   end
 end
 

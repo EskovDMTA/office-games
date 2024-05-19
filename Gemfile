@@ -9,6 +9,7 @@ gem "rack-cors"
 gem 'faker'
 
 gem "aasm"
+gem 'enumerize'
 gem 'pundit'
 
 # tournament brackets

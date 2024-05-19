@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/EskovDMTA/bracket_tree.git
-  revision: 4997ac17a444874c095344ac02d67c4a9687cc7a
+  revision: c03b366c5b689ba5e10ffbadb46fde65ec36ce2e
   specs:
     bracket_tree (0.1.0)
 
@@ -115,6 +115,8 @@ GEM
     dry-core (1.0.1)
       concurrent-ruby (~> 1.0)
       zeitwerk (~> 2.6)
+    enumerize (2.7.0)
+      activesupport (>= 3.2)
     erubi (1.12.0)
     faker (3.2.3)
       i18n (>= 1.8.11, < 2)
@@ -246,6 +248,7 @@ DEPENDENCIES
   debug
   devise
   devise-jwt
+  enumerize
   faker
   jbuilder
   pg (~> 1.1)
