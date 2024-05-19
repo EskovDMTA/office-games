@@ -28,18 +28,20 @@ Rails.application.routes.draw do
 
       scope module: 'tournaments' do
         resources :tournaments do
+          member do
+            get "generate_bracket"
+            get "bracket"
+          end
           resources :tournament_bids, only: %i[index create] do
             member do
               post :accept
               post :reject
             end
           end
-          post :generate_brackets, to: "brackets#generate", on: :member
+          resources :teams, only: %i[show create update destroy]
         end
       end
     end
-
-    resources :teams, only: %i[show create update destroy]
   end
 end
 

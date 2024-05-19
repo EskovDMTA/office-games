@@ -10,7 +10,6 @@ def create_tournaments
       end_date = Faker::Date.forward(days: 20)
       game = Game.all.sample
       bracket_type = bracket_types.sample
-      puts bracket_type
       organization.tournaments.create(name:, start_date:, end_date:, game_id: game.id, description:, bracket_type:)
     end
     puts "Tournaments created"

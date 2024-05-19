@@ -2,10 +2,10 @@ module Api
   module V1
     module Tournaments
       class TournamentsController < Api::V1::Tournaments::ApplicationController
-        before_action :set_organization, only: %i[index create]
-        before_action :set_tournament, only: %i[ show update destroy ]
-        before_action :authorize_tournament, only: %i[create update destroy]
-
+        before_action :set_organization, only: %i[index create generate_bracket bracket]
+        before_action :set_tournament, only: %i[ show update destroy generate_bracket bracket]
+        before_action :authorize_tournament, only: %i[create update destroy generate_bracket]
+        before_action :set_bracket_service, only: %i[generate_bracket bracket]
         def index
           @tournaments = ::Tournaments::Tournament.where(organization_id: @organization.id)
           render format: :json
@@ -38,6 +38,26 @@ module Api
           render json: { error: "Произошла ошибка при удалении соревнования:#{ e.message }" }, status: :unprocessable_entity
         end
 
+        def generate_bracket
+          if @tournament.bracket
+            render json: { error: "Bracket already exists for this tournament" }, status: :unprocessable_entity
+          else
+            bracket = @tournament_service.create_bracket
+            @tournament.update!(bracket: bracket.to_json)
+            render json: { message: "Bracket successfully generated" }, status: :ok
+          end
+        rescue ActiveRecord::RecordNotFound => e
+          render json: { error: "Tournament not found" }, status: :not_found
+        rescue StandardError => e
+          render json: { error: e.message }, status: :unprocessable_entity
+        end
+
+        def bracket
+          @bracket = @tournament_service.get_bracket
+          render format: :json
+        end
+
+
         private
 
         def tournament_params
@@ -48,9 +68,12 @@ module Api
           @tournament = ::Tournaments::Tournament.find_by(organization_id: @organization.id, id: params[:id])
         end
 
+        def set_bracket_service
+          @tournament_service = BracketService::TournamentBracket.new(set_tournament)
+        end
+
         def set_organization
           @organization = Organization.find_by(owner_id: current_user.id)
-          puts @organization.inspect
           raise ActiveRecord::RecordNotFound, "Организация не найдена у текущего пользователя" if @organization.nil?
         rescue ActiveRecord::RecordNotFound => e
           render json: { error: e.message }, status: :not_found
