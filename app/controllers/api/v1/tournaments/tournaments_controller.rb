@@ -5,7 +5,6 @@ module Api
         before_action :set_organization, only: %i[index create generate_bracket bracket]
         before_action :set_tournament, only: %i[ show update destroy generate_bracket bracket]
         before_action :authorize_tournament, only: %i[create update destroy generate_bracket]
-        before_action :set_bracket_service, only: %i[generate_bracket bracket]
         def index
           @tournaments = ::Tournaments::Tournament.where(organization_id: @organization.id)
           render format: :json
@@ -42,7 +41,8 @@ module Api
           if @tournament.bracket
             render json: { error: "Bracket already exists for this tournament" }, status: :unprocessable_entity
           else
-            bracket = @tournament_service.create_bracket
+            bracket_creator = BracketService::BracketCreator.new(@tournament)
+            bracket = bracket_creator.create_bracket
             @tournament.update!(bracket: bracket.to_json)
             render json: { message: "Bracket successfully generated" }, status: :ok
           end
@@ -53,7 +53,8 @@ module Api
         end
 
         def bracket
-          @bracket = @tournament_service.get_bracket
+          bracket_loader = BracketService::BracketLoader.new(@tournament)
+          @bracket = bracket_loader.load_bracket
           render format: :json
         end
 
@@ -66,10 +67,6 @@ module Api
 
         def set_tournament
           @tournament = ::Tournaments::Tournament.find_by(organization_id: @organization.id, id: params[:id])
-        end
-
-        def set_bracket_service
-          @tournament_service = BracketService::TournamentBracket.new(set_tournament)
         end
 
         def set_organization
