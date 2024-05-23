@@ -1,0 +1,17 @@
+admin:
+  email: admin@mail.ru
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'qwerty123') %>
+  first_name: AdminDima
+  last_name: DimaAdmin
+  profession: Developer
+  admin: true
+  jti: <%= SecureRandom.uuid %>
+
+user:
+  email: user@mail.ru
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'qwerty123') %>
+  first_name: UserDima
+  last_name: DimaUser
+  profession: Developer
+  admin: false
+  jti: <%= SecureRandom.uuid %>
