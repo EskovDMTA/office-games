@@ -66,7 +66,7 @@ module Api
         end
 
         def set_tournament
-          @tournament = ::Tournaments::Tournament.find_by(organization_id: @organization.id, id: params[:id])
+          @tournament = ::Tournaments::Tournament.find(params[:id])
         end
 
         def set_organization
